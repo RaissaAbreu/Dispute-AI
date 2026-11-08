@@ -1,0 +1,10 @@
+Histórico de atendimento — Loja Exemplo Eletrônicos
+Pedido: #55102
+Canal: chat do site
+
+[05/11/2026 10:12] Atendente (Paulo): Olá! Recebemos um aviso do banco sobre o pedido #55102.
+Poderia confirmar se reconhece a compra do fone de ouvido XP-500?
+[05/11/2026 10:30] Sem resposta da cliente.
+[06/11/2026 09:05] Atendente (Paulo): Nova tentativa de contato por telefone (19) 9xxxx-xxxx — chamada não atendida.
+[06/11/2026 09:07] Observação interna: pedido postado em 15/10/2026. A transportadora ainda não
+enviou o comprovante de recebimento assinado. Solicitado ao setor de logística.
