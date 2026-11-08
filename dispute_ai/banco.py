@@ -157,4 +157,7 @@ def estatisticas(caminho: Path | str = CAMINHO_DB) -> dict:
         pendentes = con.execute(
             "SELECT COUNT(*) FROM casos WHERE decisao_analista IN ('pendente', 'aguardando_docs')"
         ).fetchone()[0]
-    return {"total": total, "valor_total": valor, "por_status": por_status, "pendentes": pendentes}
+        por_decisao = dict(con.execute(
+            "SELECT decisao_analista, COUNT(*) FROM casos GROUP BY decisao_analista").fetchall())
+    return {"total": total, "valor_total": valor, "por_status": por_status, "pendentes": pendentes,
+            "por_decisao": por_decisao}

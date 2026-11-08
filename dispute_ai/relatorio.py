@@ -17,21 +17,22 @@ CORES_RISCO = {"baixo": "#047857", "medio": "#B45309", "alto": "#B91C1C"}
 CSS = """
 * { font-family: sans-serif; }
 body { font-size: 9.5pt; color: #1F2937; }
-h2 { font-size: 11.5pt; color: #0B2545; margin: 14pt 0 5pt 0; padding-bottom: 3pt;
-     border-bottom: 1px solid #CBD5E1; }
+h2 { font-family: serif; font-size: 14pt; font-weight: normal; color: #1C1F26; margin: 14pt 0 5pt 0;
+     padding-bottom: 3pt; border-bottom: 1px solid #D9D3C7; }
 p { margin: 0 0 4pt 0; line-height: 1.35; }
 table { width: 100%; border-collapse: collapse; }
 td, th { padding: 4pt 6pt; vertical-align: top; text-align: left; }
-.caso { font-size: 13pt; font-weight: bold; color: #0B2545; margin: 10pt 0 2pt 0; }
-.kpi td { border: 1px solid #CBD5E1; }
+.caso { font-family: serif; font-size: 20pt; color: #1C1F26; margin: 6pt 0 2pt 0; }
+.eyebrow { font-size: 7.5pt; color: #A87C2A; font-weight: bold; letter-spacing: 2pt; }
+.kpi td { border: 1px solid #E4DED2; }
 .kpi-r { font-size: 7.5pt; color: #64748B; text-transform: uppercase; }
-.kpi-v { font-size: 11pt; font-weight: bold; color: #0B2545; }
-.grade td, .grade th { border-bottom: 1px solid #E2E8F0; }
-.grade th { background-color: #EEF2F7; color: #0B2545; font-size: 8.5pt; }
+.kpi-v { font-family: serif; font-size: 14pt; color: #13213F; }
+.grade td, .grade th { border-bottom: 1px solid #EFEBE3; }
+.grade th { color: #34466E; font-size: 8pt; border-bottom: 1px solid #D9D3C7; }
 .rot { color: #64748B; }
 ul { margin: 0 0 0 14pt; padding: 0; }
 li { margin-bottom: 2pt; }
-.rec td { border: 1px solid #1D4E89; border-left: 4px solid #1D4E89; color: #0B2545; }
+.rec td { border-left: 3px solid #A87C2A; font-family: serif; font-size: 13pt; color: #1C1F26; }
 .alerta { color: #B91C1C; }
 .ok { color: #047857; }
 .aviso { font-size: 7.5pt; color: #64748B; margin-top: 12pt; }
@@ -84,7 +85,8 @@ def montar_html(analise: dict) -> str:
                    f"<p>{escape(analise.get('notas_analista') or '')}</p>")
 
     return f"""
-<p class="caso">CASO {escape(numero)}</p>
+<p class="eyebrow">ANÁLISE DE CONTESTAÇÃO</p>
+<p class="caso">Caso {escape(numero)}</p>
 <p style="color:{cor_txt}; font-weight:bold;">● {escape(analise.get('status_rotulo', ''))}</p>
 
 <table class="kpi" style="margin-top:8pt"><tr>
@@ -120,7 +122,7 @@ def montar_html(analise: dict) -> str:
 <table class="grade"><tr><th width="34%">Arquivo</th><th width="22%">Tipo</th><th>Conteúdo</th></tr>{docs}</table>
 
 <h2>Recomendação da IA</h2>
-<table class="rec"><tr><td><b>{escape(analise.get('recomendacao', ''))}</b></td></tr></table>
+<table class="rec"><tr><td>{escape(analise.get('recomendacao', ''))}</td></tr></table>
 
 <h2>Providências sugeridas</h2>
 <ol>{providencias}</ol>
@@ -131,8 +133,9 @@ quando utilizados para demonstração.</p>
 
 
 ALTURA_CABECALHO = 62
-AZUL_ESCURO = (11 / 255, 37 / 255, 69 / 255)
-AZUL_CLARO = (191 / 255, 211 / 255, 234 / 255)
+AZUL_ESCURO = (19 / 255, 33 / 255, 63 / 255)
+AZUL_CLARO = (201 / 255, 207 / 255, 218 / 255)
+OURO = (201 / 255, 164 / 255, 92 / 255)
 
 
 def _desenhar_cabecalho(pagina: pymupdf.Page, analise: dict) -> None:
@@ -140,9 +143,9 @@ def _desenhar_cabecalho(pagina: pymupdf.Page, analise: dict) -> None:
     meta = analise.get("meta", {})
     largura = pagina.rect.width
     pagina.draw_rect(pymupdf.Rect(0, 0, largura, 82), color=None, fill=AZUL_ESCURO)
-    pagina.insert_text((40, 42), "Dispute AI", fontsize=18, fontname="hebo", color=(1, 1, 1))
-    pagina.insert_text((40, 60), "Análise de contestação · relatório preliminar",
-                       fontsize=9, fontname="helv", color=AZUL_CLARO)
+    pagina.insert_text((40, 44), "DISPUTE AI", fontsize=19, fontname="tiro", color=(1, 1, 1))
+    pagina.insert_text((40, 62), "I N T E L I G Ê N C I A   E M   C O N T E S T A Ç Õ E S",
+                       fontsize=6.5, fontname="hebo", color=OURO)
     origem = meta.get("provedor_nome", "")
     if meta.get("modelo"):
         origem += f" · {meta['modelo']}"

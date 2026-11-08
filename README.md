@@ -4,7 +4,7 @@
 
 Empresas de meios de pagamento recebem contestações de transações feitas com cartão. Para cada uma, é preciso analisar documentos, identificar o motivo, verificar as evidências e organizar as informações que vão subsidiar a resposta. O Dispute AI automatiza essa triagem e entrega uma **análise preliminar** para um analista humano revisar.
 
-![Tela de análise](docs/tela_analise.png)
+![Resultado da análise](docs/tela_resultado.png)
 
 ## Funcionalidades
 
@@ -16,7 +16,8 @@ Empresas de meios de pagamento recebem contestações de transações feitas com
 | 4 | **Organização das evidências** | Cada documento é classificado por tipo, e as evidências recebem uma força (forte, moderada ou fraca) |
 | 5 | **Documentos ausentes** | Um checklist determinístico por motivo aponta os documentos obrigatórios e recomendados que faltam |
 | 6 | **Relatório** | Status, risco, pontos de atenção, inconsistências, recomendação e providências, em tela, **PDF** e JSON |
-| + | **Histórico de casos** | Casos salvos em SQLite com filtros, reabertura, parecer do analista e exclusão |
+| + | **Revisão do analista** | Central com os casos pendentes para registrar a decisão (defender, aceitar, aguardar documentos) |
+| + | **Histórico de casos** | Casos salvos em SQLite com indicadores, filtros, reabertura e exclusão |
 | + | **Vários provedores de LLM** | Anthropic (Claude), OpenAI (GPT) ou Google Gemini, escolhidos na barra lateral |
 | + | **Modo demonstração** | Análise por regras, sem chave de API. Também serve de contingência se a API falhar |
 
@@ -48,7 +49,26 @@ Preencha no `.env` a chave do provedor que for usar (`ANTHROPIC_API_KEY`, `OPENA
 streamlit run app.py
 ```
 
-Acesse http://localhost:8501, clique em **"Usar caso demonstrativo"** e depois em **"Analisar contestação"**.
+Acesse http://localhost:8501, clique em **"Usar caso demonstrativo"** e depois em **"Analisar contestação"**. Ao final, o sistema abre a tela **Resultado da análise**.
+
+## Telas
+
+A navegação fica na barra lateral, na seção **Área de trabalho**:
+
+| Tela | Conteúdo |
+|------|----------|
+| **Nova análise** | Envio dos documentos, lista de arquivos e contexto opcional |
+| **Resultado da análise** | Seletor de casos, cartão de classificação de risco, resultado preliminar, downloads e abas (resumo, evidências, pontos de atenção, documentos ausentes, documentos, dados da transação e parecer) |
+| **Revisão do analista** | Indicadores por decisão e casos pendentes com o formulário de decisão |
+| **Histórico** | Indicadores gerais, filtros e tabela de casos |
+| **Como funciona** | Fluxo da análise e checklist de evidências por motivo |
+
+<p>
+  <img src="docs/tela_nova_analise.png" width="49%" alt="Nova análise"/>
+  <img src="docs/tela_revisao.png" width="49%" alt="Revisão do analista"/>
+</p>
+
+O visual segue um padrão executivo: fundo creme, títulos serifados (Cormorant Garamond), rótulos dourados e barra lateral azul-marinho. As fontes vêm do Google Fonts; sem internet, o navegador usa fontes equivalentes do sistema.
 
 ## Caso demonstrativo
 
@@ -94,9 +114,9 @@ Dispute-AI/
 │   │   ├── base.py             # Integração com Anthropic, OpenAI e Gemini
 │   │   └── prompts.py          # Prompt do sistema e esquema JSON da resposta
 │   └── ui/
-│       ├── estilos.py          # Tema corporativo azul-escuro
-│       ├── componentes.py      # Cartões, relatório em abas e parecer do analista
-│       └── paginas.py          # Nova análise, Histórico e Como funciona
+│       ├── estilos.py          # Identidade visual (creme, serifa, dourado e azul-marinho)
+│       ├── componentes.py      # Cabeçalhos, cartões, painel de risco e relatório em abas
+│       └── paginas.py          # Nova análise, Resultado, Revisão, Histórico e Como funciona
 ├── scripts/gerar_exemplos.py   # Gera os documentos fictícios
 ├── exemplos/                   # Caso demonstrativo (R$ 850,00)
 ├── tests/                      # Testes automatizados (pytest)

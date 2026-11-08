@@ -108,6 +108,6 @@ def test_banco_e_relatorio(docs_exemplo, tmp_path):
     assert banco.obter_documento(caso_id, docs_exemplo[0].nome, db)["conteudo"] == docs_exemplo[0].dados
     pdf = pymupdf.open("pdf", gerar_pdf(salvo))
     texto = "".join(p.get_text() for p in pdf)
-    assert "CASO #001" in texto and "Comprovante de entrega" in texto
+    assert "Caso #001" in texto and "Comprovante de entrega" in texto
     banco.excluir_caso(caso_id, db)
     assert banco.listar_casos(db) == []
